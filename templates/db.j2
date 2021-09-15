@@ -1,0 +1,24 @@
+$ORIGIN home.
+$TTL 3h
+
+@   IN SOA  watch-pony.home. root.home. (
+            2021091003  ; serial in the format YYYYMMDD## - !!! CHANGE ON EVERY ZONE UPDATE
+            24h         ; refresh after 24 hours
+            2h          ; retry after 2 hours
+            1w          ; expire after 1 week
+            1h )        ; minimum TTL of 1 hour
+;
+;
+    IN NS   watch-pony.home.
+;
+;
+router            IN A  192.168.1.1
+watch-pony        IN A  192.168.1.4
+pink-pony         IN A  192.168.1.5
+;
+; Aliases
+;
+prometheus      IN CNAME  watch-pony.home.
+grafana         IN CNAME  watch-pony.home.
+alertmanager    IN CNAME  watch-pony.home.
+meshcommander   IN CNAME  watch-pony.home.

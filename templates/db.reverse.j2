@@ -1,0 +1,17 @@
+$ORIGIN 1.168.192.in-addr.arpa.
+$TTL 3h
+
+@   IN SOA  watch-pony.home. root.home. (
+            2021090601  ; serial in the format YYYYMMDD## - !!! CHANGE ON EVERY ZONE UPDATE
+            24h         ; refresh after 24 hours
+            2h          ; retry after 2 hours
+            1w          ; expire after 1 week
+            1h )        ; minimum TTL of 1 hour
+;
+;
+    IN NS   watch-pony.home.
+;
+;
+1   IN PTR  router.home.
+4   IN PTR  watch-pony.home.
+5   IN PTR  pink-pony.home.

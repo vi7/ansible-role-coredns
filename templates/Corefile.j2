@@ -1,0 +1,16 @@
+. {
+  log {
+    class denial error
+    # uncomment to log everything
+    #class all
+  }
+  errors
+  loadbalance
+  prometheus
+  reload
+  auto {
+    directory /etc/coredns/zones db\.(.*) {1}
+  }
+  # DNS from the Orange Funbox
+  forward . 194.204.152.34 8.8.8.8
+}

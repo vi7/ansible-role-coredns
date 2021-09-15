@@ -1,0 +1,43 @@
+---
+- name: Coredns Create config dir
+  ansible.builtin.file:
+    path: "{{ coredns_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Coredns Prepare config file
+  ansible.builtin.template:
+    src: Corefile.j2
+    dest: "{{ coredns_config_dir }}/Corefile"
+    force: true
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+# TODO: complete zones config
+
+
+# TODO: container run config
+- name: Coredns Run container
+# include collection into the module name
+  community.docker.docker_container:
+    name: "{{ coredns_container_name }}"
+    hostname: "{{ coredns_container_name }}"
+    image: "{{ coredns_image }}:{{ coredns_version }}"
+    container_default_behavior: compatibility
+    command:
+    - "--config.file={{ coredns_container_config_dir }}/coredns.yml"
+    - --storage.path=/coredns/data
+    - "--data.retention={{ coredns_data_retention }}"
+    state: started
+    ports:
+    - "53:53/udp"
+    restart: "{{ coredns_container_restart }}"
+    recreate: "{{ coredns_container_recreate }}"
+    restart_policy: unless-stopped
+    log_driver: journald
+    log_options:
+      tag: "{{ '{{' }}.Name{{ '}}' }}"
+    volumes:
+    - "{{ coredns_config_dir }}:{{ coredns_container_config_dir }}:ro"
+    - "{{ coredns_data_volume }}:/coredns:rw"

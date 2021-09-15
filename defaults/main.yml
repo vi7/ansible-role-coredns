@@ -1,0 +1,15 @@
+---
+# Image name to create container from
+coredns_image: coredns/coredns
+# Docker image tag, typically corresponds to the application version or 'latest'
+coredns_version: "1.8.4"
+# Name for the container
+coredns_container_name: coredns
+# Use with started state to force a matching container to be stopped and restarted
+coredns_container_restart: no
+# Use with present and started states to force the re-creation of an existing container
+coredns_container_recreate: no
+# Path to the Coredns configs on the host. Must be readable for the user: uid=65534(nobody) gid=65534(nobody)
+coredns_config_dir: /etc/coredns
+# Path to the Coredns configs inside the container
+coredns_container_config_dir: "{{ coredns_config_dir | default('/etc/coredns') }}"
