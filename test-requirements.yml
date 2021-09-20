@@ -1,0 +1,7 @@
+---
+# roles:
+# - name: role_name
+#   version: 'version'
+collections:
+- name: community.docker
+  version: '1.9.1'
