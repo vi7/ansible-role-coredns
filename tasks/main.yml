@@ -1,17 +1,36 @@
 ---
+- name: Install packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - python3
+  - python3-pip
+  - python3-docker
+  tags:
+  - prerequisites
+
 - name: Coredns Populate service facts
   ansible.builtin.service_facts:
   tags:
   - prerequisites
 
 - name: Coredns Disable a local systemd-resolved DNS stub listener
-  ansible.builtin.template:
-    src: 01-disable_dnsstub.conf.j2
-    dest: /etc/systemd/resolved.conf.d/01-disable_dnsstub.conf
-    force: true
-    owner: root
-    group: root
-    mode: '0644'
+  block:
+  - name: Coredns Create systemd-resolved config dir
+    ansible.builtin.file:
+      path: /etc/systemd/resolved.conf.d
+      state: directory
+      mode: '0755'
+
+  - name: Coredns Deploy systemd-resolved config file
+    ansible.builtin.template:
+      src: 01-disable_dnsstub.conf.j2
+      dest: /etc/systemd/resolved.conf.d/01-disable_dnsstub.conf
+      force: true
+      owner: root
+      group: root
+      mode: '0644'
   when: "'systemd-resolved.service' in ansible_facts.services"
   notify:
   - Restart systemd-resolved service

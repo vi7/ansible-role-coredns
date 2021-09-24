@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
   options:
-    # role-file: test-requirements.yml
+    role-file: test-requirements.yml
     requirements-file: test-requirements.yml
 lint: |
   set -e

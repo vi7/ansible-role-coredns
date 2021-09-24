@@ -25,7 +25,7 @@ coredns_container_config_dir: "{{ coredns_config_dir | default('/etc/coredns') }
 ##############
 # Space-separated list of classes of responses that should be logged
 # See available classes here: https://coredns.io/plugins/log/#syntax
-corefile_log_classes: all
+coredns_log_classes: all
 # coredns_log_classes: denial error
 
 # List of plugins to enable
