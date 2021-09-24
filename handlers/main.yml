@@ -1,2 +1,5 @@
 ---
-# handlers file for coredns
+- name: Restart systemd-resolved service
+  ansible.builtin.systemd:
+    state: restarted
+    name: systemd-resolved

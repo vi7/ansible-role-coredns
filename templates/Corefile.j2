@@ -1,16 +1,19 @@
+#jinja2: lstrip_blocks: True
+{{ ansible_managed | comment }}
+# https://coredns.io/manual/toc/#configuration
+
 . {
   log {
-    class denial error
-    # uncomment to log everything
-    #class all
+    class {{ coredns_log_classes }}
   }
-  errors
-  loadbalance
-  prometheus
-  reload
+{% for plugin in coredns_extra_plugins %}
+  {{ plugin }}
+{% endfor %}
+{% if coredns_custom_config | length > 0 %}
+  {{ coredns_custom_config }}
+{% endif %}
   auto {
-    directory /etc/coredns/zones db\.(.*) {1}
+    directory {{ coredns_zones_dir }} db\.(.*) {1}
   }
-  # DNS from the Orange Funbox
-  forward . 194.204.152.34 8.8.8.8
+  forward . {{ coredns_upstream_servers }}
 }

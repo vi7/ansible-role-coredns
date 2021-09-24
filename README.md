@@ -1,7 +1,7 @@
-Role Name
-=========
+Ansible role: Containerized CoreDNS
+===================================
 
-A brief description of the role goes here.
+Role to run [CoreDNS](https://coredns.io) server using Docker
 
 Requirements
 ------------
@@ -11,12 +11,18 @@ See [TODO:](#todo) section for steps which must be performed manually
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+See [defaults/main.yml](defaults/main.yml) for the full variable list and their description
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+TODO: check if dependencies are installed automatically from [meta/requirements.yml](meta/requirements.yml)
+
+Collections:
+- [community.docker](https://galaxy.ansible.com/community/docker)
+
+Roles:
+- [docker](https://github.com/vi7/ansible-role-docker)
 
 Example Playbook
 ----------------
@@ -27,15 +33,23 @@ Including an example of how to use your role (for instance, with variables passe
       roles:
          - { role: username.rolename, x: 42 }
 
-License
--------
+Development
+-----------
 
-BSD
+### Role testing
+
+Script [test.sh](test.sh) activates Python virtualenv, installs all the required Python packages and executes linter. More complex tests could be executed like following:
+```bash
+source venv/bin/activate
+molecule test
+```
+
+> NOTE: symlink at `molecule/default/roles/monitoring_stack` points to the role itself, it's needed for the correct ansible-lint operation due to the role being imported rather than included inside `molecule/default/converge.yml`. Probably this won't be needed anymore when role is extracted to the standalone repo.
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[vi7](https://github.com/vi7)
 
 
 TODO:

@@ -1,15 +1,57 @@
 ---
+# CoreDNS config directory
+coredns_config_dir: /etc/coredns
+# Directory to load zones from
+coredns_zones_dir: "{{ coredns_config_dir }}/zones"
+
+###############
+## Container ##
+###############
 # Image name to create container from
 coredns_image: coredns/coredns
 # Docker image tag, typically corresponds to the application version or 'latest'
-coredns_version: "1.8.4"
+coredns_version: "1.8.5"
 # Name for the container
 coredns_container_name: coredns
 # Use with started state to force a matching container to be stopped and restarted
 coredns_container_restart: no
 # Use with present and started states to force the re-creation of an existing container
 coredns_container_recreate: no
-# Path to the Coredns configs on the host. Must be readable for the user: uid=65534(nobody) gid=65534(nobody)
-coredns_config_dir: /etc/coredns
 # Path to the Coredns configs inside the container
 coredns_container_config_dir: "{{ coredns_config_dir | default('/etc/coredns') }}"
+
+##############
+## Corefile ##
+##############
+# Space-separated list of classes of responses that should be logged
+# See available classes here: https://coredns.io/plugins/log/#syntax
+corefile_log_classes: all
+# coredns_log_classes: denial error
+
+# List of plugins to enable
+coredns_extra_plugins:
+- errors
+- loadbalance
+- reload
+# - prometheus
+
+# Space-separated list of upstream DNS servers for the 'forward' plugin
+coredns_upstream_servers: 8.8.8.8 8.8.4.4 tls://9.9.9.9
+
+# Custom config for the root zone '.' server block.
+# Will be placed below {{ coredns_extra_plugins }} and above 'auto' plugin zones and 'forward' plugin upstreams
+coredns_custom_config: ""
+
+# List of dictionaries containing absolute or relative 'path' to the RFC 1035-style master file
+# and 'zone' (origin) WITHOUT the ending dot the file is responsible for.
+# Data from the 'zone' key will be used to construct proper zonefile names in order for the CoreDNS
+# to extract the origin from the filename automatically.
+# See templates/Corefile.j2 and https://coredns.io/plugins/auto/#syntax for the details
+# Example zone files could be found under 'files/db.*'
+coredns_zonefiles: []
+# - path: files/db.example.com
+#   zone: example.com
+# - path: files/db.home
+#   zone: home
+# - path: files/db.reverse
+#   zone: 1.168.192.in-addr.arpa

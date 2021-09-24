@@ -1,0 +1,19 @@
+$ORIGIN home.
+$TTL 3h
+
+@   IN SOA  molecule.home. root.home. (
+            2021091901  ; serial
+            24h         ; refresh after 24 hours
+            2h          ; retry after 2 hours
+            1w          ; expire after 1 week
+            1h )        ; minimum TTL of 1 hour
+;
+;
+    IN NS   molecule.home.
+;
+;
+molecule        IN A  192.168.200.50
+;
+; Aliases
+;
+molecule2       IN CNAME  molecule.home.

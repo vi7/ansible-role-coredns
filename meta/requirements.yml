@@ -1,0 +1,9 @@
+---
+collections:
+- name: community.docker
+  version: '1.9.1'
+
+roles:
+- name: docker
+  src: https://github.com/vi7/ansible-role-docker
+  version: 0.1.1

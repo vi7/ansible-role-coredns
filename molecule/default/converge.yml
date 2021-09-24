@@ -4,4 +4,16 @@
   tasks:
   - name: "Include coredns"
     include_role:
-      name: "coredns"
+      name: "ansible-role-coredns"
+    vars:
+      coredns_extra_plugins:
+      - errors
+      - loadbalance
+      - reload
+      - prometheus
+      coredns_upstream_servers: 1.1.1.1 1.0.0.1
+      coredns_zonefiles:
+      - path: files/db.home
+        zone: home
+      - path: files/db.reverse
+        zone: 200.168.192.in-addr.arpa
