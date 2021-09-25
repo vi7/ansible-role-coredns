@@ -77,7 +77,8 @@
     image: "{{ coredns_image }}:{{ coredns_version }}"
     container_default_behavior: compatibility
     command:
-    - "-conf {{ coredns_container_config_dir }}/Corefile"
+    - -conf
+    - "{{ coredns_container_config_dir }}/Corefile"
     command_handling: correct
     state: started
     ports:
