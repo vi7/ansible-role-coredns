@@ -2,7 +2,3 @@
 collections:
 - name: community.docker
   version: '1.9.1'
-
-roles:
-- name: vi7.docker
-  version: 0.1.1

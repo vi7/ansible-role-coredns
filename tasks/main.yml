@@ -78,6 +78,7 @@
     container_default_behavior: compatibility
     command:
     - "-conf {{ coredns_container_config_dir }}/Corefile"
+    command_handling: correct
     state: started
     ports:
     - "53:53/udp"
