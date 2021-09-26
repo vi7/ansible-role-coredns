@@ -2,7 +2,7 @@ $ORIGIN home.
 $TTL 3h
 
 @   IN SOA  molecule.home. root.home. (
-            2021091901  ; serial
+            2021092602  ; serial
             24h         ; refresh after 24 hours
             2h          ; retry after 2 hours
             1w          ; expire after 1 week

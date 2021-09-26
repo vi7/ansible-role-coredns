@@ -1,11 +1,26 @@
 ---
-# This is an example playbook to execute Ansible tests.
-
+# Ansible playbook with tests
 - name: Verify
   hosts: all
-  gather_facts: false
+  become: True
+  gather_facts: False
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
-  # TODO: install bind-utils to have dig for testing
+  - name: Install packages
+    ansible.builtin.package:
+      name: bind-utils
+      state: present
+  - name: Query CoreDNS server
+    ansible.builtin.command: dig +noall +short @127.0.0.1 molecule.home
+    args:
+      warn: False
+    changed_when: False
+    ignore_errors: yes
+    register: dig_out
+  - name: CoreDNS server availability check
+    fail:
+      msg: CoreDNS server is not available!
+    when: dig_out.rc == 9
+  - name: Zone check
+    fail:
+      msg: "CoreDNS reply is empty for the 'molecule.home'. Zone 'home.' was not configured properly!"
+    when: dig_out.stdout != "192.168.200.50"

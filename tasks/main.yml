@@ -8,12 +8,12 @@
   - python3-pip
   - python3-docker
   tags:
-  - prerequisites
+  - pre
 
 - name: Coredns Populate service facts
   ansible.builtin.service_facts:
   tags:
-  - prerequisites
+  - pre
 
 - name: Coredns Disable a local systemd-resolved DNS stub listener
   block:
@@ -35,7 +35,7 @@
   notify:
   - Restart systemd-resolved service
   tags:
-  - prerequisites
+  - pre
 
 - name: Coredns Create dirs
   ansible.builtin.file:
@@ -46,7 +46,7 @@
   - "{{ coredns_config_dir }}"
   - "{{ coredns_zones_dir }}"
   tags:
-  - configuration
+  - conf
 
 - name: Coredns Create config file
   ansible.builtin.template:
@@ -57,7 +57,7 @@
     group: root
     mode: '0644'
   tags:
-  - configuration
+  - conf
 
 - name: Coredns Create zone files
   ansible.builtin.copy:
@@ -68,7 +68,7 @@
     mode: '0644'
   loop: "{{ coredns_zonefiles }}"
   tags:
-  - configuration
+  - conf
 
 - name: Coredns Run container
   community.docker.docker_container:
@@ -92,4 +92,4 @@
     volumes:
     - "{{ coredns_config_dir }}:{{ coredns_container_config_dir }}:ro"
   tags:
-  - deployment
+  - run
