@@ -3,7 +3,7 @@ Ansible role: Containerized CoreDNS
 
 Role to run [CoreDNS](https://coredns.io) server using Docker
 
-> **WARNING:** This role installs **Python 3** and [**Docker SDK for Python**](https://docker-py.readthedocs.io/en/stable/) packages to the target host(s) automatically
+> **!! WARNING: !!** This role installs **Python 3** and [**Docker SDK for Python**](https://docker-py.readthedocs.io/en/stable/) packages to the target host(s) automatically!
 
 Requirements
 ------------
@@ -22,7 +22,7 @@ Collections:
 - [community.docker](https://galaxy.ansible.com/community/docker)
 
 Roles:
-- [docker](https://github.com/vi7/ansible-role-docker)
+- [vi7.docker](https://galaxy.ansible.com/vi7/docker)
 
 Example Playbook
 ----------------
@@ -49,6 +49,8 @@ Example Playbook
 
 ```
 
+Some examples of the RFC 1035-style (BIND) zone files could be found under the [files](files/) dir
+
 Development
 -----------
 
@@ -56,7 +58,7 @@ Development
 
 Script [test.sh](test.sh) activates Python virtualenv, installs all the required Python packages and executes linter.
 
-More complex tests must be executed manually like follows:
+More comprehensive functional tests must be executed manually like follows (after running `./test.sh`):
 ```bash
 source venv/bin/activate
 molecule test

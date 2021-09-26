@@ -46,6 +46,8 @@ galaxy_info:
   galaxy_tags:
   - coredns
   - dns
+  - bind9
+  - rfc1035
 
 dependencies:
 - name: vi7.docker
