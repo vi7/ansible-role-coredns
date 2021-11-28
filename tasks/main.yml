@@ -81,8 +81,7 @@
     - "{{ coredns_container_config_dir }}/Corefile"
     command_handling: correct
     state: started
-    ports:
-    - "53:53/udp"
+    network_mode: host
     restart: "{{ coredns_container_restart }}"
     recreate: "{{ coredns_container_recreate }}"
     restart_policy: unless-stopped
