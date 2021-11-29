@@ -17,10 +17,10 @@
     ignore_errors: yes
     register: dig_out
   - name: CoreDNS server availability check
-    fail:
-      msg: CoreDNS server is not available!
-    when: dig_out.rc == 9
+    debug:
+      msg: CoreDNS server is available
+    when: dig_out.rc == 0
   - name: Zone check
-    fail:
-      msg: "CoreDNS reply is empty for the 'molecule.home'. Zone 'home.' was not configured properly!"
-    when: dig_out.stdout != "192.168.200.50"
+    debug:
+      msg: "IP address for 'molecule.home' is {{ dig_out.stdout }}. Zone 'home.' is configured properly"
+    when: dig_out.stdout == "192.168.200.50"

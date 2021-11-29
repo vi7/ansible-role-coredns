@@ -51,6 +51,6 @@ galaxy_info:
 
 dependencies:
 - name: vi7.docker
-  version: 0.1.1
+  version: 0.2.0
   vars:
     docker_version: '20.10.8'

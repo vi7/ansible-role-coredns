@@ -1,4 +1,5 @@
 ---
+# TODO: add firewalld 'dns' service to open needed ports
 - name: Install packages
   ansible.builtin.package:
     name: "{{ item }}"
@@ -92,3 +93,12 @@
     - "{{ coredns_config_dir }}:{{ coredns_container_config_dir }}:ro"
   tags:
   - run
+
+- name: Permit traffic in default zone for DNS service
+  ansible.posix.firewalld:
+    service: dns
+    permanent: yes
+    state: enabled
+  when: coredns_configure_firewalld
+  tags:
+  - firewall

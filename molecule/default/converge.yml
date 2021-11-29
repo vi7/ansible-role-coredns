@@ -8,6 +8,7 @@
     include_role:
       name: "ansible-role-coredns"
     vars:
+      coredns_configure_firewalld: no
       coredns_extra_plugins:
       - errors
       - loadbalance

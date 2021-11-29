@@ -3,6 +3,8 @@
 coredns_config_dir: /etc/coredns
 # Directory to load zones from
 coredns_zones_dir: "{{ coredns_config_dir }}/zones"
+# Permit DNS service on the firewalld
+coredns_configure_firewalld: yes
 
 ###############
 ## Container ##
